@@ -1,33 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { ApolloProvider } from 'react-apollo'
-import gql from 'graphql-tag'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
 import { client } from './utils/apolloUtils'
 
+import GetData from './pages/getData'
+import PostData from './pages/postData'
+
 function App() {
-  const [list, setList] = useState([])
-  useEffect(() => {
-    client.query({
-      // cache
-      query: gql`
-        {
-          rates(currency: "CNY") {
-            currency
-          }
-        }
-      `
-    }).then(result => {
-      let rates = result.data.rates.splice(0, 20)
-      setList(rates)
-    });
-  }, [])
-  
   return (
     <ApolloProvider client={client}>
-      <div className="App">
-        {list.map((item, i) => (
-          <li key={i}>{i} --- {item.currency}</li>
-        ))}
-      </div>
+      <Router>
+        <Switch>
+              <Route path="/" exact component={GetData}></Route>
+              <Route path="/post" component={PostData}></Route>
+        </Switch>
+      </Router>
     </ApolloProvider>
     
   );
