@@ -4,7 +4,7 @@ import gql from 'graphql-tag'
 
 import { client } from '../../utils/apolloUtils'
 
-function GetData() {
+function List() {
   const [list, setList] = useState([])
   useEffect(() => {
     client.query({
@@ -56,4 +56,4 @@ function GetData() {
   );
 }
 
-export default GetData;
+export default List;
